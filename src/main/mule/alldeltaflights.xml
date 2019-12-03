@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<wsc:config name="Web_Service_Consumer_Config" doc:name="Web Service Consumer Config" doc:id="094e8587-eec3-4bfd-9e52-d25042447714" >
+		<wsc:connection wsdlLocation="http://mu.mulesoft-training.com/essentials/delta?wsdl" service="TicketServiceService" port="TicketServicePort" address="http://mu.mulesoft-training.com/essentials/delta" />
+	</wsc:config>
+	<flow name="alldeltaflightsFlow" doc:id="b60305a1-8adc-4c98-80f3-294a15123756" >
+		<logger level="INFO" doc:name="Logger" doc:id="bb4fbe2d-9c75-4811-b570-3a675c1435d5" message="alldeltaflightsflow.................."/>
+		<wsc:consume operation="listAllFlights" doc:name="Consume" doc:id="a90f8281-bbc5-4b9e-9316-888c04cebb65" config-ref="Web_Service_Consumer_Config"/>
+		<ee:transform doc:name="Transform Message" doc:id="798f8c8f-a6be-4783-9121-255a0c3d0937" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="5c74cb87-1326-4a66-b6ed-18274dc482b0" message="final response............."/>
+	</flow>
+</mule>

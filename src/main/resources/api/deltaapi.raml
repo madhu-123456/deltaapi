@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: deltaapi
+baseUri: http://localhost:8081/api
+/deltaflights:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/listAllDeltaFlights-get-response.json
+
+  /{destination}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/deltaFlightsByDestination.json
+                          
+              
+  
